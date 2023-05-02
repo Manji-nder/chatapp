@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ref share login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<style>
+
+    .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  border: 1px solid black;position:absolute;bottom: 0px;top:0px;left:0px;right: 0px;
+}
+
+div div{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.box1{
+     border-radius: 10px;background-color: white;width: 50%;height: 50%;scale:.8;
+}
+.box1:hover{
+    scale:1;
+}
+</style>
+</head>
+<body style="background: rgb(116, 104, 237);background: linear-gradient(to bottom, rgb(33, 4, 115) 24%, rgb(119, 181, 248) 77%);height: 100vh;">
+    <h1 style="font-family: 'Lobster', cursive; text-align: center;background: linear-gradient(to right, rgb(237, 236, 241), rgb(173, 210, 237));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;">Welcome {{email}} !!!</h1>
+  <div class="container">
+  <div ><div class="box1">
+    <a href="/refer"><h1 style="font-family: 'Lobster', cursive; text-align: center;background: linear-gradient(to right, rgb(27, 4, 120), rgb(93, 180, 241));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;">Are you here to Share Your Referral?</h1></a>
+    </div></div>
+  <div ><div class="box1">
+    <a href="/getrefered"><h1 style="font-family: 'Lobster', cursive; text-align: center;background: linear-gradient(to right, rgb(27, 4, 120), rgb(93, 180, 241));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;">Are you here to get a Referral?</h1></a>
+    </div></div>
+</div>
+
+    
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js" integrity="sha512-xbQU0+iHqhVt7VIXi6vBJKPh3IQBF5B84sSHdjKiSccyX/1ZI7Vnkt2/8y8uruj63/DVmCxfUNohPNruthTEQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div id="main_container">
+        <div style="grid-column: 1/span 2;display: grid;grid-template-columns: 2fr 8fr 2fr;">
+            <div style="text-align: center;justify-content: center;margin:auto" ><div id="c1" onclick="showChats(this)"  style="background-color: aliceblue;border-radius: 10px;height:28px;padding:8px;margin: auto;font-weight: bold;text-align: center;justify-content: center;font-size: 16px;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);right:40px;top:25px">CHATS</div></div>
+            <div style="font-family: 'Lobster', cursive; text-align: center;background: linear-gradient(to right, rgb(237, 236, 241), rgb(173, 210, 237));background-clip:text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;margin:auto;font-size: 28px;text-align: justify;">wellcome <div><span id="my_email">{{email}}</span> !!!!</div></div>
+            <div style="background-color: aliceblue;border-radius: 10px;width: 28px;height:28px;padding:8px;margin: auto;font-weight: bold;text-align: center;justify-content: center;font-size: 26px;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);right:40px;top:25px" onclick="addpartispent()">+</div>
+        
+        </div>
+          <div id="i1" class="main_card"> 
+        </div>
+
+
+        <div id="i2" class="main_card" >
+            <div id="chat_name" style="padding-left:10px;display: flex;align-items: center;border-bottom:1px solid black">start chat......</div>
+            <div id="text_main" style="overflow-y: scroll;overflow-x: scroll;display: flex;
+  flex-direction: column;
+  justify-content: flex-end;">
+    
+            </div>
+            <div style="border: 1px solid black;display: grid;grid-template-columns: 8fr 2fr;border-left:0px;border-right:0px;border-bottom:0px">
+                <input type="text" placeholder="type your text msg!" id="msg" style="border: none;">
+                <button onclick="sendmsg()">send</button>
+              </div>
+        
+            </div>
+        </div>
+
+    </div>
+
+    <div id="addform"  ><div onclick="noaddform(this)" style="position:absolute;top:20px;right:20px">X</div><div id="form">
+        <h1 style="font-family: 'Lobster', cursive; text-align: center;background: linear-gradient(to right, rgb(133, 133, 3), rgb(119, 119, 45));
+        -webkit-background-clip: text;background-clip: text;
+        -webkit-text-fill-color: transparent;margin:2vw;font-size:4vw"><span id="email">{{email}}</span>Start Chat With</h1><br>
+        <input id="p1" type="text" style="padding:3px;border-radius:2vw;font-size:large" placeholder="add valid email">
+        <button id="btn" style="margin:15px;background: linear-gradient(to right, rgb(171, 171, 140), rgb(212, 212, 82));border:none;box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);border-radius:4px" onclick="participentadded()" >Add partcipent</button>
+      </div></div>
+    
+</body>
+<style>
+    
+    #c1{display: none;}
+
+    #main_container{
+        position: fixed;top: 0px;left: 0px;bottom: 0px;right: 0px;margin:0px;
+        display: grid;
+        grid-template-columns: 5fr 5fr;
+        grid-template-rows: 2fr 8fr;
+        background: rgb(116, 104, 237);background: linear-gradient(to bottom, rgb(33, 4, 115) 24%, rgb(119, 181, 248) 77%);height: 100vh;display: grid;grid-template-rows: 2fr 8fr;
+    }
+
+    .main_card{
+        background-color: aliceblue;
+        margin: 12px;
+        border-radius: 30px;
+        overflow-y: scroll;
+        overflow-x: scroll;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+   
+
+   /*  */
+
+   ::-webkit-scrollbar {
+  display: none;
+}
+
+
+  
+  /* add for ends */
+
+  #addform{position: fixed;top:0px;left: 0px;bottom: 0px;right: 0px;background-color: rgba(255, 255, 255, 0.5);  backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center;margin: 0px;
+
+}
+
+#form{
+  height: 50vh;background-color: aliceblue;border-radius:3vw ;display: flex; justify-content: center; align-items: center;box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);flex-direction: column;
+}
+#btn{
+  padding:3px;scale:1.8;
+}
+
+#btn:hover{
+  scale: 2;
+}
+
+
+  /* add form ends */
+.card {
+        background-color: white; /* Set the background color of the card */
+        border-radius: 24px; /* Add rounded corners to the card */
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5); /* Add a shadow to the card */
+        margin: 10px; /* Add margin to the card */
+        padding: 5px; /* Add padding to the card */
+        height:80px
+      }
+
+.card p {
+  margin-left:10px ;
+}
+
+#l{
+  display: flex;
+  justify-content:right;
+  align-items: right;
+}
+
+#r{
+  display: flex;
+  justify-content:left;
+  align-items: left;
+}
+
+#l pre{
+  background-color: lightblue;
+}
+
+#r pre{
+  background-color: white;
+}
+
+#i2{display: grid;grid-template-rows: 1fr 8fr 1fr;}
+
+{{!-- mobile --}}
+
+@media (max-width: 600px) {
+  /* styles for small screens */
+
+  #i2{
+    display: none;
+  }
+
+  #main_container{
+    grid-template-columns: 10fr;
+  }
+
+
+
+
+
+}
+
+
+ 
+}
+</style>
+
+<script>
+
+    my_id=document.getElementById("my_email").innerText;
+    
+      window.addEventListener("load",()=>{
+
+        
+        socket.emit("joinid",my_id.replace(/\./g,"#") );
+
+        socket.emit("loadChatfromDb",my_id.replace(/\./g,"#"));
+  
+        socket.on("chats_from_server",(obj)=>{
+          const chatkeys = Object.keys(obj);
+
+        const chatarray=[]
+        for (let i = 0; i < chatkeys.length; i++) {
+            const key = chatkeys[i];
+            chatarray.push([key,obj[key],obj[key][2]])
+        }
+
+        flag = true;
+        c=0;
+        while(flag){
+                flag=false;
+                for (let i=0; i<chatarray.length -1;i++){
+                    if(chatarray[i][2]<chatarray[i+1][2]){
+                        temp_val=chatarray[i];
+                        chatarray[i]=chatarray[i+1];
+                        chatarray[i+1]=temp_val;
+                        flag=true
+                    }
+                }
+        }
+
+
+          console.log("called",chatarray);
+
+          chat_card = document.getElementById('i1');
+          chat_card.innerHTML="";
+          console.log(obj,"---",chat_card);
+          chatarray.map((chatComp)=>{
+          let msg_from_chat=obj[chatComp[0]][1][obj[chatComp[0]][1].length-1] ?? "l*;@#@;*no text yet";
+          console.log(msg_from_chat,"msg from chat");
+          msg_from_chat=msg_from_chat.split("*;@#@;*");
+          msg_from_chat = msg_from_chat[0]=="r"?`>>>: ${msg_from_chat[1]}`:`<<<: ${msg_from_chat[1]}`;
+          chat_card.innerHTML+="<div class='card' onclick=cardConnectRoom('"+obj[chatComp[0]][0]+"::"+chatComp[0]+"')>"+
+          "<h4>"+chatComp[0]+"</h4>"+
+          "<p>"+msg_from_chat+"</p></div>"
+        })
+        })
+  
+        
+      })
+  
+     
+  
+      
+      function cardConnectRoom(RoomToJoin){
+        document.getElementById("text_main").innerHTML="";
+        document.getElementById('chat_name').innerText=RoomToJoin.split("::")[1].replace(/#/g,".");
+        room_join(RoomToJoin.split("::")[0]);
+        load_this_chat(document.getElementById("my_email").innerText.replace(/\./g,"#"),RoomToJoin.split("::")[1].replace(/\./g,"#"));
+        if (window.innerWidth < 600) {
+          
+          i1ele=document.getElementById("i1");
+          i1ele.style.display="none";
+          
+          document.getElementById("i2").style.display="grid";
+          document.getElementById("c1").style.display="block";
+        } else {
+          
+          console.log("Device width is greater than or equal to 768 pixels");
+        }
+  
+      }
+  
+  
+  // 
+  
+  room="";
+      flag=true
+      socket = io();
+      socket.on('connect', () => {
+          console.log('---conected----')
+      })
+  
+      function room_join(room1){
+          if(flag){
+          room=room1
+          socket.emit('join',{data:room,id:my_id.replace(/\./g,"#")});
+          flag=false;
+      }else{
+          leavee();
+          room=room1
+          socket.emit('join',{data:room,id:my_id.replace(/\./g,"#")});
+          }
+  
+      }
+  
+      function leavee(){
+          socket.emit('leave',room)
+      }
+  
+     // send msg
+     function sendmsg(){
+    msg_ele=document.getElementById("msg");
+    msg_val=msg_ele.value;
+    msg_ele.value="";
+    msg_arr=["l",msg_val];
+    ele=document.getElementById("text_main");
+    ele.innerHTML+="<div id='"+msg_arr[0]+"'><pre style='display:inline;border: 1px solid black;margin:2px;padding:3px'>"+msg_arr[1]+"</pre></div>";
+    you_me=document.getElementById('chat_name').innerText.replace(/\./g,"#")+":"+document.getElementById("my_email").innerText.replace(/\./g,"#");
+    socket.emit("msgFromClient",{msg_arr,room,you_me});
+  } 
+  
+  socket.on("msgFromServer",(arr)=>{
+    msg_arr=arr;
+    ele=document.getElementById("text_main");
+    ele.innerHTML+="<div id='"+msg_arr[0]+"'><pre style='display:inline;border: 1px solid black;margin:2px;padding:3px'>"+msg_arr[1]+"</pre></div>";
+  })
+  
+  
+  // addform
+  
+  function addpartispent(){
+    document.getElementById("addform").style.display='flex'
+  }
+  
+  //add participent
+  
+  function participentadded(){
+    ele_input=document.getElementById("p1");
+    value=ele_input.value;
+    // adding value of id to chat
+    document.getElementById("text_main").innerHTML="";
+    document.getElementById('chat_name').innerText=value;
+    //-----------------------------------------------
+    value=value.replace(/\./g,"#");
+    ele_input.value="";
+    value=value+":"+document.getElementById("my_email").innerText.replace(/\./g,"#");
+    socket.emit("insert_parti",value);
+    document.getElementById("addform").style.display='none';
+    
+    
+  }
+  
+  socket.on("part_load_chat",data=>{
+      socket.emit("loadChatfromDb",my_id.replace(/\./g,"#"));
+  })
+  
+   socket.on("room_to_join",room=>{
+        console.log(room, "this is room from server");
+        room_join(room)
+      })
+  
+  function load_this_chat(me,you){
+    socket.emit("load_given_chat",[me,you])
+  }
+  
+  socket.on("take_chat",chat=>{
+    ele=document.getElementById("text_main");
+    chat.map(msg=>{
+      msg_arr=msg.split("*;@#@;*");
+      ele.innerHTML+="<div id='"+msg_arr[0]+"'><pre style='display:inline;border: 1px solid black;margin:2px;padding:3px'>"+msg_arr[1]+"</pre></div>";
+  
+    })
+  
+  })
+
+  function noaddform(e){
+    e.parentNode.style.display='none';
+  }
+
+  function showChats(e){
+    e.style.display="none";
+    document.getElementById("i1").style.display="block";
+    document.getElementById("i2").style.display="none";
+  }
+  
+  </script>
+</html>
